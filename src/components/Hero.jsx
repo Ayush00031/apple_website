@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const Hero = () => {
   const [videoSrc, setVideoSrc] = useState(
-    window.innerWidth > 760 ? smallHeroVideo : heroVideo
+    window.innerWidth < 760 ? smallHeroVideo : heroVideo
   );
 
   const handleVideoSrcSet = () => {
@@ -20,13 +20,12 @@ const Hero = () => {
     window.addEventListener("resize", handleVideoSrcSet);
 
     return () => {
-      window.addEventListener("resize", handleVideoSrcSet);
+      window.removeEventListener("reisze", handleVideoSrcSet);
     };
   }, []);
 
   useGSAP(() => {
     gsap.to("#hero", { opacity: 1, delay: 2 });
-
     gsap.to("#cta", { opacity: 1, y: -50, delay: 2 });
   }, []);
 
@@ -48,6 +47,7 @@ const Hero = () => {
           </video>
         </div>
       </div>
+
       <div
         id="cta"
         className="flex flex-col items-center opacity-0 translate-y-20"
@@ -55,7 +55,7 @@ const Hero = () => {
         <a href="#highlights" className="btn">
           Buy
         </a>
-        <p className="font-normal text-xl">From Rs.2000/month or Rs.140000</p>
+        <p className="font-normal text-xl">From $199/month or $999</p>
       </div>
     </section>
   );
